@@ -14,12 +14,19 @@ public class Tarefa1ImplSIR {
             int opt = requestOption();
             switch (opt) {
                 case 1:
-                    solucaoQuestao4();
+                    solucaoQuestao4e5();
+                    break;
+                case 2:
+                    solucaoQuestao10();
+                    break;
+                case 3:
+                    solucaoQuestao11();
                     break;
                 case 99:
                     finalizar = true;
                     break;
             }
+            System.out.println("");
         }
     }
     
@@ -33,6 +40,8 @@ public class Tarefa1ImplSIR {
     public static int requestOption() {
         System.out.println("Escolha uma opção:");
         System.out.println("  1) Questão 4 - Cifrar/decifrar string");
+        System.out.println("  2) Questão 10 - Calcular o MAC");
+        System.out.println("  3) Questão 11 - PBKDF2 + Criptografia Autenticada");
         System.out.println(" 99) Sair");
         System.out.println("");
         while (true) {
@@ -52,10 +61,15 @@ public class Tarefa1ImplSIR {
         }
     }
 
-    private static void solucaoQuestao4() {
+    private static void solucaoQuestao4e5() {
         new Questao4e5();
     }
     
+    private static void solucaoQuestao10() {
+        new Questao10();
+    }
 
-    
-}
+    private static void solucaoQuestao11() {
+        new Questao11();
+    }
+ }

@@ -120,9 +120,7 @@ public class Questao4e5 {
         String decifrada = this.decrypt(cifrada);
         System.out.println("Mensagem decifrada: " + decifrada);
         
-        System.out.println("");
-        System.out.println("Pressione ENTER para continuar...");
-        input.nextLine();
+        Utils.requestEnter();
     }
     
 }
