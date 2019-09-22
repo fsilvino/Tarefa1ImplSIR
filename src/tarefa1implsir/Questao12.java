@@ -100,8 +100,6 @@ public class Questao12 extends javax.swing.JFrame {
 
         jLabel1.setText("Senha:");
 
-        txtSenha.setText("1234");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
