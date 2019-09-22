@@ -6,6 +6,7 @@
 package tarefa1implsir;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -66,8 +67,6 @@ public class Questao12 extends javax.swing.JFrame {
         lbTitulo.setText("Criptografia de imagens");
 
         lbCriptografar.setText("Criptografar Imagem:");
-
-        txtImagemCriptografar.setText("C:\\Users\\flavi\\Pictures\\Fruta.jpeg");
 
         btnProcurarImagem.setText("...");
         btnProcurarImagem.addActionListener(new java.awt.event.ActionListener() {
@@ -258,15 +257,18 @@ public class Questao12 extends javax.swing.JFrame {
                 
                 String newFileName = getDecryptedFileName(caminho);
                 
-                try (FileOutputStream dest = new FileOutputStream(newFileName)) {
-                    dest.write(descriptografado);
-                }
+                FileOutputStream dest = new FileOutputStream(newFileName);
+                dest.write(descriptografado);
+                dest.close();
                 
                 JOptionPane.showMessageDialog(this, "Imagem descriptografada com sucesso!\n\n" + newFileName);
-            } catch (IOException ex) {
-                Logger.getLogger(Questao12.class.getName()).log(Level.SEVERE, null, ex);
-                JOptionPane.showMessageDialog(this, ex.getMessage());
+            } catch (InvalidCipherTextException ex) {
+                JOptionPane.showMessageDialog(this, "Não foi possível descriptografar a imagem!\nVerifique a senha.\n\nErro: " + ex.getMessage());
             } catch (DecoderException ex) {
+                Logger.getLogger(Questao12.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(Questao12.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
                 Logger.getLogger(Questao12.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -288,7 +290,7 @@ public class Questao12 extends javax.swing.JFrame {
         return "";
     }
     
-    private byte[] computarCriptografia(boolean forEncryption, String salt, byte[] imgBytes) throws DecoderException {
+    private byte[] computarCriptografia(boolean forEncryption, String salt, byte[] imgBytes) throws DecoderException, InvalidCipherTextException {
         GCMBlockCipher gcm = new GCMBlockCipher(new AESEngine());
 
         String password = txtSenha.getText();
@@ -308,11 +310,7 @@ public class Questao12 extends javax.swing.JFrame {
         
         int lengthOutc = gcm.processBytes(imgBytes, 0, imgBytes.length, outc, 0);
 
-        try {
-            gcm.doFinal(outc, lengthOutc);
-        } catch (InvalidCipherTextException e) {
-            e.printStackTrace();
-        }
+        gcm.doFinal(outc, lengthOutc);
 
         return outc;
     }
