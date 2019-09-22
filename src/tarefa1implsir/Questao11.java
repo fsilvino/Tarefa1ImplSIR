@@ -52,7 +52,7 @@ public class Questao11 {
         GCMBlockCipher gcm = new GCMBlockCipher(new AESEngine());
 
         // Deriva a chave
-        String derivedKey = generateDerivedKey(password, getSalt(), MAC_SIZE);
+        String derivedKey = PBKDF2Utils.generateDerivedKey(password, PBKDF2Utils.getSalt(), MAC_SIZE);
         
         System.out.println("Chave derivada: " + derivedKey);
         
@@ -86,24 +86,5 @@ public class Questao11 {
         Utils.requestEnter();
     }
     
-    private static String generateDerivedKey(String password, String salt, Integer iterations) {
-        PBEKeySpec spec = new PBEKeySpec(password.toCharArray(), salt.getBytes(), iterations, 128);
-        SecretKeyFactory pbkdf2 = null;
-        String derivedPass = null;
-        try {
-            pbkdf2 = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA512");
-            SecretKey sk = pbkdf2.generateSecret(spec);
-            derivedPass = Hex.encodeHexString(sk.getEncoded());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return derivedPass;
-    }
     
-    private static String getSalt() throws NoSuchAlgorithmException {
-        SecureRandom sr = SecureRandom.getInstance("SHA1PRNG");
-        byte[] salt = new byte[16];
-        sr.nextBytes(salt);
-        return Hex.encodeHexString(salt);
-    }
 }

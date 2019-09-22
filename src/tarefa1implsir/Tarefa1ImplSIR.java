@@ -22,6 +22,9 @@ public class Tarefa1ImplSIR {
                 case 3:
                     solucaoQuestao11();
                     break;
+                case 4:
+                    solucaoQuestao12();
+                    break;
                 case 99:
                     finalizar = true;
                     break;
@@ -42,6 +45,7 @@ public class Tarefa1ImplSIR {
         System.out.println("  1) Questão 4 - Cifrar/decifrar string");
         System.out.println("  2) Questão 10 - Calcular o MAC");
         System.out.println("  3) Questão 11 - PBKDF2 + Criptografia Autenticada");
+        System.out.println("  4) Questão 12 - Criptografar imagem");
         System.out.println(" 99) Sair");
         System.out.println("");
         while (true) {
@@ -49,7 +53,7 @@ public class Tarefa1ImplSIR {
             String n = sn.nextLine();
             try {
                 int opt = Integer.parseInt(n);
-                if (opt >= 1 && opt <= 3 || opt == 99) {
+                if (opt >= 1 && opt <= 4 || opt == 99) {
                     System.out.println("");
                     return opt;
                 } else {
@@ -71,5 +75,11 @@ public class Tarefa1ImplSIR {
 
     private static void solucaoQuestao11() {
         new Questao11();
+    }
+
+    private static void solucaoQuestao12() {
+        Questao12 q = new Questao12();
+        q.setVisible(true);
+        q.toFront();
     }
  }
